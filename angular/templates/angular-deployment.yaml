@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels: 
+  {{- include "angular.labels" . | nindent 4}}
+  name: {{- include "angular.fullname" . }}-deployment
+  namespace: develop
+spec:
+  replicas: {{.Values.replicaCount}}
+  selector:
+    matchLabels:
+    {{- include "angular.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "angular.selectorLabels" . | nindent 8 }}
+    spec:
+
+      containers:
+        - name: {{.Values.container.name}}
+          image: {{.Values.image.repository}}:{{.Values.image.tag}}
+          imagePullPolicy: {{.Values.image.pullPolicy}}
+          ports:
+            - containerPort: {{.Values.container.port}}
+              name: {{.Values.container.portName}}
+          volumeMounts:
+            - name: angular-volume-mount
+              mountPath: /usr/share/nginx/html
+
+      imagePullSecrets:
+        - name: {{.Values.imagePullSecrets}}
+
+      volumes:
+        - name: angular-volume-mount
+          persistentVolumeClaim:
+            claimName: angular-pvc

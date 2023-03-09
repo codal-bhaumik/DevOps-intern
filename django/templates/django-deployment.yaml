@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{- include "django.fullname" . }}
+  labels:
+    {{- include "django.labels" . | nindent 4 }}
+  namespace: develop
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "django.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "django.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: django
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - {{ .Values.bashCommand }}
+    #command: ["python"]
+    #args: ["manage.py","runserver","0.0.0.0:8000"]
+          ports:
+            - containerPort: {{ .Values.containerPort.port}}
+              name: {{ .Values.containerPort.name}}
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.envSecrets }}
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.envSecrets }}
+                  key: password
+            - name: POSTGRES_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.envSecrets }}
+                  key: name
+            - name: POSTGRES_HOST
+              value: postgres-service
+          volumeMounts:
+            - name: postgres-volume-mount
+              mountPath: /var/lib/postgresql/data
+            - name: nginx-volume-mount
+              mountPath: /usr/src/django/static/
+
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets }}
+
+      volumes:
+        - name: postgres-volume-mount
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - name: nginx-volume-mount
+          persistentVolumeClaim:
+            claimName: nginx-pvc

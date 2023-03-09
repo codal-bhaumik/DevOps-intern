@@ -1,0 +1,16 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{- include "angular.fullname" . }}-pvc
+  labels:
+    type: local
+  namespace: develop
+spec:
+  storageClassName: manual
+  accessModes:
+    - {{.Values.storage.accessMode}}
+
+  resources:
+    requests:
+      storage: {{.Values.storage.capacity}}
+  volumeName: {{- include "angular.fullname" . }}-pv

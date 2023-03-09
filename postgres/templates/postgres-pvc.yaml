@@ -1,0 +1,15 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres-pvc
+  labels:
+    type: local
+  namespace: develop
+spec:
+  storageClassName: manual
+  accessModes:
+    - {{ .Values.storage.accessMode}}
+  resources:
+    requests:
+      storage: {{.Values.storage.capacity}}
+  volumeName: postgres-pv

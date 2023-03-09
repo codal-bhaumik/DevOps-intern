@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{- include "nginx.fullname" . }}-deployment
+  labels:
+    {{- include "nginx.labels" . | nindent 4 }}
+  namespace: develop
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "nginx.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "nginx.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: nginx
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          #image: 801553454489.dkr.ecr.us-east-1.amazonaws.com/nginx@sha256:dce07fe40743f65bfc7c2f8269bb86934f583a1624c8538df516cd93602636de
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.container.port}}
+              name: {{ .Values.container.name}}
+          volumeMounts:
+            - name: nginx-volume-mount
+              mountPath: /home/app/static/
+            - name: angular-volume-mount
+              mountPath: /usr/share/nginx/html
+
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets }}
+
+      volumes:
+        - name: nginx-volume-mount
+          persistentVolumeClaim:
+            claimName: nginx-pvc
+        - name: angular-volume-mount
+          persistentVolumeClaim:
+            claimName: angular-pvc

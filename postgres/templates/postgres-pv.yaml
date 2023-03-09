@@ -1,0 +1,15 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ include "postgres.fullname" . }}-pv
+  labels:
+    type: local
+  namespace: develop
+spec:
+  storageClassName: manual
+  capacity:
+    storage: {{ .Values.storage.capacity }}
+  accessModes:
+    - {{ .Values.storage.accessMode }}
+  hostPath:
+    path: /usr/src/postgres-pv
