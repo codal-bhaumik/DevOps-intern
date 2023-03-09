@@ -20,7 +20,7 @@ service:
 
 storage:
   capacity: 2Gi
-  accessMode: ReadWriteMany
+  accessMode: ReadWriteOnce
 
 imagePullSecrets: my-secret
 nameOverride: ""
