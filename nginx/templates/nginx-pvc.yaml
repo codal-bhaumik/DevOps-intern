@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{- include "nginx.fullname" . }}-pvc
+  name: {{ include "nginx.fullname" . }}-pvc
   labels:
     type: local
   namespace: develop

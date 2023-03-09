@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: {{ include "django.fullname" . }}
   labels:
-    {{- include "django.labels" . | nindent 4 }}
+    {{ include "django.labels" . | nindent 4 }}
   namespace: develop
 spec:
   #type: NodePort
   selector:
-    {{- include "django.selectorLabels" . | nindent 6 }}
+    {{ include "django.selectorLabels" . | nindent 6 }}
   ports:
     - name: django
       port: {{.Values.service.port}}

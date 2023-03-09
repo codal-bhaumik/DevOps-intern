@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{- include "django.fullname" . }}
-  # labels:
-  #   {{- include "django.labels" . | nindent 4 }}
+  name: {{ include "django.fullname" . }}
+  labels:
+   {{ include "django.labels" . | nindent 4 }}
   namespace: develop
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "django.selectorLabels" . | nindent 6 }}
+      {{ include "django.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "django.selectorLabels" . | nindent 8 }}
+        {{ include "django.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: django

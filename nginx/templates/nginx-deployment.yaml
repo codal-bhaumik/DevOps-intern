@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{- include "nginx.fullname" . }}-deployment
-  # labels:
-  #   {{- include "nginx.labels" . | nindent 4 }}
+  name: {{ include "nginx.fullname" . }}-deployment
+  labels:
+    {{ include "nginx.labels" . | nindent 4 }}
   namespace: develop
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "nginx.selectorLabels" . | nindent 6 }}
+      {{ include "nginx.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "nginx.selectorLabels" . | nindent 8 }}
+        {{ include "nginx.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: nginx

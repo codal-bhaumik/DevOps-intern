@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{- include "angular.fullname" . }}-pvc
+  name: {{ include "angular.fullname" . }}-pvc
   labels:
     type: local
   namespace: develop
@@ -13,4 +13,4 @@ spec:
   resources:
     requests:
       storage: {{.Values.storage.capacity}}
-  volumeName: {{- include "angular.fullname" . }}-pv
+  volumeName: {{ include "angular.fullname" . }}-pv
