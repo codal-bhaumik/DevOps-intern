@@ -9,11 +9,11 @@ spec:
   replicas: {{.Values.replicaCount}}
   selector:
     matchLabels:
-    {{- include "angular.selectorLabels" . | nindent 6 }}
+    {{ include "angular.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "angular.selectorLabels" . | nindent 8 }}
+        {{ include "angular.selectorLabels" . | nindent 8 }}
     spec:
 
       containers:
