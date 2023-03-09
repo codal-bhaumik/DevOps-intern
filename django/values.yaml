@@ -19,7 +19,7 @@ service:
 
 bashCommand: /usr/src/django/apirun.sh
 
-envSecrets: postges-credentials
+envSecrets: postgres-credentials
 imagePullSecrets: my-secret
 
 labels:
