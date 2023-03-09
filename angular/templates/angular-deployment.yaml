@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   # labels: 
   # {{- include "angular.labels" . | nindent 4}}
-  name: {{- include "angular.fullname" . }}-deployment
+  name: {{ include "angular.fullname" . }}-deployment
   namespace: develop
 spec:
   replicas: {{.Values.replicaCount}}
