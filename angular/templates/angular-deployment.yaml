@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels: 
-  {{- include "angular.labels" . | nindent 4}}
+  # labels: 
+  # {{- include "angular.labels" . | nindent 4}}
   name: {{- include "angular.fullname" . }}-deployment
   namespace: develop
 spec:
