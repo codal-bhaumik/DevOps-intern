@@ -20,6 +20,7 @@ spec:
         - name: {{.Values.container.name}}
           image: {{.Values.image.repository}}:{{.Values.image.tag}}
           imagePullPolicy: {{.Values.image.pullPolicy}}
+          
           ports:
             - containerPort: {{.Values.container.port}}
               name: {{.Values.container.portName}}

@@ -11,9 +11,8 @@ image:
   tag: 13
 
 imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
+nameOverride: postgres
+fullnameOverride: postgres
 container:
   port: 5432
 
