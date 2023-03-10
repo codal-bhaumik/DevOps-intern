@@ -28,6 +28,7 @@ spec:
               mountPath: /home/app/static/
             - name: angular-volume-mount
               mountPath: /usr/share/nginx/html
+              subPath: html
 
       imagePullSecrets:
         - name: {{ .Values.imagePullSecrets }}
