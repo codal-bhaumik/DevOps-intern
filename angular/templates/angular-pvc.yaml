@@ -8,7 +8,7 @@ metadata:
 spec:
   storageClassName: manual
   accessModes:
-    - {{.Values.storage.accessMode}}
+    - {{ .Values.storage.accessMode}}
 
   resources:
     requests:
